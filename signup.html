@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Frontend Development Frameworks Lab</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="lab-badge">
+          <i class="fa-solid fa-code"></i> Frontend Lab Experiment
+        </div>
+        <h1 class="card-title">Create Account</h1>
+        <p class="card-subtitle">Register a new demo profile with LocalStorage persistence</p>
+      </div>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form" novalidate>
+        
+        <!-- Full Name Field -->
+        <div class="form-group">
+          <label for="signup-name" class="form-label">Full Name</label>
+          <div class="input-container">
+            <input 
+              type="text" 
+              id="signup-name" 
+              name="fullname" 
+              class="form-input" 
+              placeholder="e.g. Jane Doe"
+              autocomplete="name"
+              required
+            >
+            <i class="fa-solid fa-user input-icon"></i>
+          </div>
+          <div id="name-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="signup-email" class="form-label">Email ID</label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              id="signup-email" 
+              name="email" 
+              class="form-input" 
+              placeholder="e.g. jane.doe@example.com"
+              autocomplete="email"
+              required
+            >
+            <i class="fa-solid fa-envelope input-icon"></i>
+          </div>
+          <div id="email-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="signup-password" class="form-label">Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="signup-password" 
+              name="password" 
+              class="form-input" 
+              placeholder="Minimum 6 characters"
+              autocomplete="new-password"
+              required
+            >
+            <i class="fa-solid fa-lock input-icon"></i>
+            <button 
+              type="button" 
+              class="toggle-password" 
+              data-target="signup-password" 
+              aria-label="Toggle password visibility"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          
+          <!-- Password Strength Indicator -->
+          <div class="strength-meter">
+            <div class="strength-bars">
+              <span class="strength-bar"></span>
+              <span class="strength-bar"></span>
+              <span class="strength-bar"></span>
+              <span class="strength-bar"></span>
+            </div>
+            <div class="strength-text">
+              <span>Security strength:</span>
+              <span id="strength-level-text" style="font-weight: 600;">None</span>
+            </div>
+          </div>
+
+          <div id="password-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="signup-confirm-password" 
+              name="confirmPassword" 
+              class="form-input" 
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              required
+            >
+            <i class="fa-solid fa-shield-halved input-icon"></i>
+            <button 
+              type="button" 
+              class="toggle-password" 
+              data-target="signup-confirm-password" 
+              aria-label="Toggle confirm password visibility"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div id="confirm-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" id="btn-signup">
+          <span>Create Account</span>
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+
+      </form>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        Already have an account? 
+        <a href="login.html"><strong>Log In</strong></a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.LabAuth.initSignupPage();
+    });
+  </script>
+</body>
+</html>

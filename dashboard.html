@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Student Portal</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Immediate Auth Guard to avoid content flash -->
+  <script>
+    (function() {
+      const session = sessionStorage.getItem('lab_current_session') || localStorage.getItem('lab_current_session');
+      if (!session) {
+        window.location.replace('login.html?reason=unauthorized');
+      }
+    })();
+  </script>
+</head>
+<body class="dashboard-wrapper">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="dashboard-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <div class="brand-title">LabPortal</div>
+          <div class="brand-tag">Frontend Frameworks Lab • Exp 01</div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="user-pill">
+          <div class="user-avatar-sm" id="user-avatar-sm">U</div>
+          <span class="user-name-sm" id="user-header-name">Loading...</span>
+        </div>
+        <button class="btn-nav-logout action-logout" title="Log Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    
+    <!-- Welcome Banner -->
+    <section class="welcome-banner">
+      <div class="welcome-text">
+        <h1>Welcome, <span id="welcome-user-name" style="color: #a5b4fc;">Student</span>! 👋</h1>
+        <p>You have successfully authenticated into the Frontend Development Frameworks lab application. All state and session data are synchronized with browser Local Storage.</p>
+        <div class="welcome-badge-group">
+          <span class="status-badge live-pulse">
+            Session Active
+          </span>
+          <span class="status-badge" style="background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3); color: #a5b4fc;">
+            <i class="fa-solid fa-database"></i> LocalStorage Connected
+          </span>
+          <span class="status-badge" style="background: rgba(236, 72, 153, 0.15); border-color: rgba(236, 72, 153, 0.3); color: #f472b6;">
+            <i class="fa-solid fa-shield-halved"></i> Route Guard Protected
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat Cards Grid -->
+    <section class="stats-grid">
+      
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fa-solid fa-stopwatch"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Session Active Time</h3>
+          <div class="stat-value" id="stat-session-timer">00m 00s</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon success">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Authentication Status</h3>
+          <div class="stat-value" style="color: #10b981; font-size: 1.25rem;">Verified</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon info">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Total Registered Users</h3>
+          <div class="stat-value" id="stat-total-users">1</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon accent">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Last Login Time</h3>
+          <div class="stat-value" id="stat-last-login" style="font-size: 1.25rem;">--:--</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Detailed Content Grid -->
+    <section class="dashboard-grid">
+      
+      <!-- User Profile Card -->
+      <div class="content-card">
+        <div class="card-heading">
+          <span><i class="fa-solid fa-id-card"></i> Student Profile</span>
+          <span class="status-badge" style="font-size: 0.72rem;">Demo Account</span>
+        </div>
+
+        <div class="profile-avatar-big" id="user-avatar-lg">U</div>
+
+        <div class="profile-details-list">
+          <div class="profile-detail-row">
+            <span class="detail-label"><i class="fa-solid fa-user"></i> Full Name</span>
+            <span class="detail-val" id="detail-user-name">Loading...</span>
+          </div>
+
+          <div class="profile-detail-row">
+            <span class="detail-label"><i class="fa-solid fa-envelope"></i> Email Address</span>
+            <span class="detail-val" id="detail-user-email">Loading...</span>
+          </div>
+
+          <div class="profile-detail-row">
+            <span class="detail-label"><i class="fa-solid fa-fingerprint"></i> User ID</span>
+            <span class="detail-val" id="detail-user-id" style="font-family: monospace; font-size: 0.8rem;">Loading...</span>
+          </div>
+
+          <div class="profile-detail-row">
+            <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> Member Since</span>
+            <span class="detail-val" id="detail-user-joined">Loading...</span>
+          </div>
+        </div>
+
+        <div class="card-actions-row">
+          <button type="button" class="btn btn-secondary" id="btn-inspect-storage" style="flex: 1;">
+            <i class="fa-solid fa-database"></i> Inspect Storage
+          </button>
+          <button type="button" class="btn btn-danger action-logout" style="flex: 1;">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent Lab Activity & Security Info -->
+      <div class="content-card">
+        <div class="card-heading">
+          <span><i class="fa-solid fa-clock-rotate-left"></i> Session & Audit Activity</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Real-time log</span>
+        </div>
+
+        <div class="activity-list" id="activity-list">
+          <!-- Dynamically populated from JS -->
+        </div>
+
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(15, 23, 42, 0.5); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <div style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.35rem; color: #a5b4fc;">
+            <i class="fa-solid fa-circle-check"></i> Lab Experiment Features Completed:
+          </div>
+          <ul style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 1.25rem; line-height: 1.6;">
+            <li>Form validation: Email regex, required fields, and password matching</li>
+            <li>Password visibility toggles and dynamic strength meter</li>
+            <li>Local Storage data persistence for user registries and active sessions</li>
+            <li>Route guard preventing unauthenticated access to dashboard.html</li>
+            <li>Complete responsive layout for mobile, tablet, and desktop screens</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Storage Inspector Modal for Lab Viva Demo -->
+  <div id="inspector-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-dialog" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-database"></i> LocalStorage Inspector</h3>
+        <button type="button" class="modal-close" id="inspector-close-btn">&times;</button>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+        This real-time snapshot shows all keys stored in <code>window.localStorage</code> and <code>window.sessionStorage</code>.
+      </p>
+      <pre id="storage-json-view" style="background: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); color: #38bdf8; font-size: 0.78rem; max-height: 320px; overflow-y: auto; white-space: pre-wrap; font-family: monospace;"></pre>
+      <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" class="btn btn-secondary" id="btn-clear-all-demo" style="width: auto; font-size: 0.8rem; color: #f87171;">
+          <i class="fa-solid fa-trash"></i> Reset Demo Data
+        </button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('inspector-modal').classList.remove('active')" style="width: auto; font-size: 0.85rem;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Footer -->
+  <footer class="dashboard-footer">
+    <p>Frontend Development Frameworks • Lab Experiment Project • Developed with HTML5, CSS3, JavaScript &amp; LocalStorage</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

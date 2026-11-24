@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Development Frameworks - Lab Experiment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      // Check for active user session
+      const session = sessionStorage.getItem('lab_current_session') || localStorage.getItem('lab_current_session');
+      if (session) {
+        window.location.replace('dashboard.html');
+      } else {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 2rem;">
+  <div class="auth-card" style="max-width: 420px; text-align: center;">
+    <h2 style="margin-bottom: 0.5rem;">Frontend Frameworks Lab</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+      Redirecting you to the authentication portal...
+    </p>
+    <div style="display: flex; gap: 0.75rem; justify-content: center;">
+      <a href="login.html" class="btn btn-primary" style="width: auto;">Go to Login</a>
+      <a href="signup.html" class="btn btn-secondary" style="width: auto;">Go to Sign Up</a>
+    </div>
+  </div>
+</body>
+</html>

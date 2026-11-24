@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Frontend Development Frameworks Lab</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6.5.1 CDN for crisp modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="lab-badge">
+          <i class="fa-solid fa-graduation-cap"></i> Frontend Lab Experiment
+        </div>
+        <h1 class="card-title">Welcome Back</h1>
+        <p class="card-subtitle">Enter your credentials to access your student dashboard</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form" novalidate>
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="login-email" class="form-label">Email ID</label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              id="login-email" 
+              name="email" 
+              class="form-input" 
+              placeholder="e.g. student@lab.edu"
+              autocomplete="email"
+              required
+            >
+            <i class="fa-solid fa-envelope input-icon"></i>
+          </div>
+          <div id="login-email-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="login-password" class="form-label">Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="login-password" 
+              name="password" 
+              class="form-input" 
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            >
+            <i class="fa-solid fa-lock input-icon"></i>
+            <button 
+              type="button" 
+              class="toggle-password" 
+              data-target="login-password" 
+              aria-label="Toggle password visibility"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div id="login-password-feedback" class="input-feedback"></div>
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="form-actions-row">
+          <label class="checkbox-container">
+            <input type="checkbox" id="remember-me" name="rememberMe">
+            <span>Remember Me</span>
+          </label>
+          <a href="#" id="forgot-password-link" class="forgot-link">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" id="btn-login">
+          <span>Log In</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+      <!-- Demo Credentials Helper Card -->
+      <div class="demo-credentials-box">
+        <div class="demo-header">
+          <span><i class="fa-solid fa-flask"></i> Quick Demo Account</span>
+          <button type="button" class="btn-demo-fill" id="fill-demo-btn">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Auto Fill
+          </button>
+        </div>
+        <div class="demo-item">
+          <span>Email:</span>
+          <code>student@lab.edu</code>
+        </div>
+        <div class="demo-item">
+          <span>Password:</span>
+          <code>Password123!</code>
+        </div>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        Don't have an account? 
+        <a href="signup.html"><strong>Sign Up</strong></a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Forgot Password Interactive Modal -->
+  <div id="forgot-password-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-key"></i> Reset Password</h3>
+        <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+        Enter your registered email address and choose a new password. The record will be updated in Local Storage.
+      </p>
+      <form id="forgot-password-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="reset-email" class="form-label">Registered Email</label>
+          <div class="input-container">
+            <input type="email" id="reset-email" class="form-input" placeholder="student@lab.edu" required>
+            <i class="fa-solid fa-envelope input-icon"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reset-new-password" class="form-label">New Password</label>
+          <div class="input-container">
+            <input type="password" id="reset-new-password" class="form-input" placeholder="Min 6 characters" required>
+            <i class="fa-solid fa-lock input-icon"></i>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+          <i class="fa-solid fa-check"></i> Save New Password
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already logged in, offer quick jump to dashboard
+      const session = window.LabAuth.getCurrentSession();
+      if (session) {
+        window.LabAuth.showToast(
+          'Active Session Found',
+          `You are already signed in as ${session.name}. <a href="dashboard.html" style="color:#a5b4fc;text-decoration:underline;">Go to Dashboard</a>`,
+          'info',
+          6000
+        );
+      }
+      window.LabAuth.initLoginPage();
+    });
+  </script>
+</body>
+</html>
